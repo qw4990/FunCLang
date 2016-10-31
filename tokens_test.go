@@ -1,10 +1,11 @@
-package ez_lang
+package func_lang
 
 import (
 	"fmt"
-	"lab/ez_lang/tokener"
 	"strings"
 	"testing"
+
+	"github.com/qw4990/func_lang/tokener"
 )
 
 func TestTokenize(t *testing.T) {
@@ -13,7 +14,7 @@ func TestTokenize(t *testing.T) {
     if NumEqual(x, 12) {
 		y := "12 dx we" 
     }`)
-	tk, err := tokener.NewSimpleTokener(_EZ_SPLITER_CHARS, ezTokenizeRules...)
+	tk, err := tokener.NewSimpleTokener(_SPLITER_CHARS, tokenizeRules...)
 	if err != nil {
 		t.Fatal(err)
 	}

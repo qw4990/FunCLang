@@ -1,6 +1,6 @@
-package ez_lang
+package func_lang
 
-import "github.com/qw4990/EZLang/tokener"
+import "github.com/qw4990/func_lang/tokener"
 
 const (
 	_ASSIGN_TYPE   = iota
@@ -24,6 +24,8 @@ const (
 	_RIGHT_BRACE_TYPE    = iota
 	_RIGHT_BRACE_REGEX   = "}"
 
+	_RETURN_TYPE  = iota
+	_RETURN_REGEX = "return"
 	_NUMBER_TYPE  = iota
 	_NUMBER_REGEX = "[0-9]+([.][0-9]+)?"
 	_STRING_TYPE  = iota
@@ -31,7 +33,7 @@ const (
 	_IDENT_TYPE   = iota
 	_IDENT_REGEX  = "[A-Za-z_][A-Za-z_0-9]*"
 
-	_EZ_SPLITER_CHARS = "\r\n\t "
+	_SPLITER_CHARS = "\r\n\t "
 )
 
 type tokenizeRule struct {
@@ -48,7 +50,7 @@ func (tr *tokenizeRule) RegExp() string {
 }
 
 // the order of these rules is important !!!
-var ezTokenizeRules = []tokener.Rule{
+var tokenizeRules = []tokener.Rule{
 	&tokenizeRule{_ASSIGN_TYPE, _ASSIGN_REGEX},
 	&tokenizeRule{_DECLARE_TYPE, _DECLARE_REGEX},
 
@@ -61,6 +63,7 @@ var ezTokenizeRules = []tokener.Rule{
 	&tokenizeRule{_LEFT_BRACE_TYPE, _LEFT_BRACE_REGEX},
 	&tokenizeRule{_RIGHT_BRACE_TYPE, _RIGHT_BRACE_REGEX},
 
+	&tokenizeRule{_RETURN_TYPE, _RETURN_REGEX},
 	&tokenizeRule{_NUMBER_TYPE, _NUMBER_REGEX},
 	&tokenizeRule{_STRING_TYPE, _STRING_REGEX},
 	&tokenizeRule{_IDENT_TYPE, _IDENT_REGEX},

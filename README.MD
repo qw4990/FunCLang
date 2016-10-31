@@ -1,11 +1,11 @@
-# EZLang
-EZLang is an easy language written by Golang and can be nested in your Golang code;
+# FunCLang
+FunCLang (Function Call Language) is an easy language written by Golang and can be nested in your Golang code;
 
-EZLang is easily to use and understand; The total lines of code of this project is less than 1000;
+FunCLang is easily to use and understand; The total lines of code of this project is less than 1000;
 
 # Syntax
 ## Types
-EZLang has only two types: string and number(float64);
+FunCLang has only two types: string and number(float64);
 
 You can use &lt;declare&gt; statement to declare variables, for example:
 

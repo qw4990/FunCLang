@@ -1,4 +1,4 @@
-package ez_lang
+package func_lang
 
 import (
 	"fmt"
@@ -7,42 +7,49 @@ import (
 	"testing"
 )
 
-type mockEZVar struct {
+type mockVar struct {
 	str string
 	num float64
 }
 
-func (mv *mockEZVar) Str() string {
+func (mv *mockVar) Str() string {
 	return mv.str
 }
 
-func (mv *mockEZVar) Num() float64 {
+func (mv *mockVar) Num() float64 {
 	return mv.num
 }
 
-func (mv *mockEZVar) IsNum() bool {
+func (mv *mockVar) IsNum() bool {
 	return mv.str == ""
 }
 
-func (mv *mockEZVar) IsStr() bool {
+func (mv *mockVar) IsStr() bool {
 	return mv.num == 0
 }
 
+func (mv *mockVar) IsTrue() bool {
+	if mv.IsStr() {
+		return mv.Str() != ""
+	}
+	return mv.Num() != 0
+}
+
 func TestDemo0(t *testing.T) {
-	sum := func(ezVars ...EZVar) EZVar {
+	sum := func(vs ...Var) Var {
 		result := 0.0
-		for _, v := range ezVars {
+		for _, v := range vs {
 			if v.IsNum() {
 				result += v.Num()
 			} else {
 				panic(fmt.Sprintf("%v is non a number", v.Str())) // use panic to report error
 			}
 		}
-		return &mockEZVar{"", result}
+		return &mockVar{"", result}
 	}
 
-	ez := NewEZInterpreter()
-	ez.RegisterFunc("Sum", sum)
+	fc := NewFunCaller()
+	fc.RegisterFunc("Sum", sum)
 
 	code := `
         a := 1
@@ -52,24 +59,24 @@ func TestDemo0(t *testing.T) {
         Println(Sum(a, b, c, d, 5, 6, 7, 8, 9, 10))
     `
 	reader := strings.NewReader(code)
-	ez.Interprete(reader)
+	fc.Call(reader)
 }
 
 func TestDemo1(t *testing.T) {
-	add := func(ezVars ...EZVar) EZVar {
+	add := func(vs ...Var) Var {
 		result := ""
-		for _, v := range ezVars {
+		for _, v := range vs {
 			if v.IsNum() {
 				result = result + " " + strconv.FormatFloat(v.Num(), 'f', 2, 64)
 			} else {
 				result = result + " " + v.Str()
 			}
 		}
-		return &mockEZVar{result, 0}
+		return &mockVar{result, 0}
 	}
 
-	ez := NewEZInterpreter()
-	ez.RegisterFunc("Add", add)
+	fc := NewFunCaller()
+	fc.RegisterFunc("Add", add)
 
 	code := `
         a := 1
@@ -79,5 +86,5 @@ func TestDemo1(t *testing.T) {
         Println(Add(a, b, c, d, 5, 6, 7, 8, 9, 10, "Hello World"))
     `
 	reader := strings.NewReader(code)
-	ez.Interprete(reader)
+	fc.Call(reader)
 }

@@ -1,4 +1,4 @@
-package ez_lang
+package func_lang
 
 import (
 	"strings"
@@ -15,13 +15,18 @@ func TestSimple(t *testing.T) {
 			Println(x)
 		}
 
-		Println(x)`
+		Println(x)
+		return 5`
 	reader := strings.NewReader(codes)
 
-	interpreter := NewEZInterpreter()
-	err := interpreter.Interprete(reader)
+	fc := NewFunCaller()
+	result, err := fc.Call(reader)
 	if err != nil {
 		t.Fatal(err)
+	}
+
+	if result.Num() != 5 {
+		t.Fatal("Error")
 	}
 }
 
@@ -37,8 +42,8 @@ func TestSimpleLoop(t *testing.T) {
 		Printf("Hello, %v, xxx sdf", 123)`
 	reader := strings.NewReader(codes)
 
-	interpreter := NewEZInterpreter()
-	err := interpreter.Interprete(reader)
+	fc := NewFunCaller()
+	_, err := fc.Call(reader)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -56,12 +61,35 @@ func TestFibNum(t *testing.T) {
 			b = c
 			cnt = Add(cnt, 1)
 		}
+
+		return "happy"
 		`
 	reader := strings.NewReader(codes)
 
-	interpreter := NewEZInterpreter()
-	err := interpreter.Interprete(reader)
+	fc := NewFunCaller()
+	result, err := fc.Call(reader)
 	if err != nil {
 		t.Fatal(err)
+	}
+	if result.Str() != "happy" {
+		t.Fatal("error")
+	}
+}
+
+func TestReturn(t *testing.T) {
+	codes := `
+		return "happy"
+		Println("hhh")
+		return "not happy"
+		`
+	reader := strings.NewReader(codes)
+
+	fc := NewFunCaller()
+	result, err := fc.Call(reader)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if result.Str() != "happy" {
+		t.Fatal("error")
 	}
 }

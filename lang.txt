@@ -1,12 +1,16 @@
 <program>:
-    <statement> SEP <program>
+    <statement> '\n' <program>
 
 <statement>:
     <if_statement>
     <for_statement>
     <declare>
     <assign>
+    <return>
     <expression>
+
+<return>:
+    return <expression>
 
 <declare>:
     IDENT := <expression>
@@ -15,10 +19,10 @@
     IDENT = <expression>
 
 <if_statement>:
-    IF <expression> { <program> }
+    if <expression> { <program> }
 
 <for_statement>:
-    FOR <expression> { <program> }
+    for <expression> { <program> }
 
 <expression>:
     <function_call> // IDENT '(' ...
@@ -42,3 +46,4 @@ IDENT:  ^[a-zA-Z][a-zA-Z_0-9]*$
 NUM:    ^[0-9]*$
 STR:    ^"[^"]*"$
 SEP:    [\n\t\r ]
+RET:    return

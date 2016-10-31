@@ -1,41 +1,41 @@
-package ez_lang
+package func_lang
 
 import (
 	"fmt"
 	"strconv"
 )
 
-func RegisterDefaultFuncs(ezi EZInterpreter) {
-	ezi.RegisterFunc("Add", Add)
-	ezi.RegisterFunc("Sub", Sub)
-	ezi.RegisterFunc("Eq", Eq)
-	ezi.RegisterFunc("Lt", Lt)
-	ezi.RegisterFunc("Gt", Gt)
-	ezi.RegisterFunc("And", And)
-	ezi.RegisterFunc("Or", Or)
-	ezi.RegisterFunc("Println", Println)
-	ezi.RegisterFunc("Printf", Printf)
+func RegisterDefaultFuncs(fc FunCaller) {
+	fc.RegisterFunc("Add", Add)
+	fc.RegisterFunc("Sub", Sub)
+	fc.RegisterFunc("Eq", Eq)
+	fc.RegisterFunc("Lt", Lt)
+	fc.RegisterFunc("Gt", Gt)
+	fc.RegisterFunc("And", And)
+	fc.RegisterFunc("Or", Or)
+	fc.RegisterFunc("Println", Println)
+	fc.RegisterFunc("Printf", Printf)
 }
 
-var EZTrue EZVar = &ezVar{
+var EZTrue Var = &fcVar{
 	typex: _EZVAR_TYPE_NUM,
 	num:   1,
 }
 
 // EZFalse :zero number or empty string will be regared as false, see function IsTrue
-var EZFalse EZVar = &ezVar{
+var EZFalse Var = &fcVar{
 	typex: _EZVAR_TYPE_NUM,
 	num:   0,
 }
 
-func Add(args ...EZVar) EZVar {
+func Add(args ...Var) Var {
 	if len(args) != 2 {
 		panic("the length of args is not 2")
 	}
 
 	a, b := args[0], args[1]
 	if a.IsNum() && b.IsNum() {
-		return newEZNum(a.Num() + b.Num())
+		return newFCNum(a.Num() + b.Num())
 	}
 
 	var strA string
@@ -52,17 +52,17 @@ func Add(args ...EZVar) EZVar {
 		strB = b.Str()
 	}
 
-	return newEZStr(strA + " " + strB)
+	return newFCStr(strA + " " + strB)
 }
 
-func Sub(args ...EZVar) EZVar {
+func Sub(args ...Var) Var {
 	if len(args) != 2 {
 		panic("the length of args is not 2")
 	}
 
 	a, b := args[0], args[1]
 	if a.IsNum() && b.IsNum() {
-		return newEZNum(a.Num() - b.Num())
+		return newFCNum(a.Num() - b.Num())
 	}
 	if a.IsStr() {
 		panic(a.Str() + " is not a number")
@@ -70,14 +70,14 @@ func Sub(args ...EZVar) EZVar {
 	panic(b.Str() + " is not a number")
 }
 
-func Mul(args ...EZVar) EZVar {
+func Mul(args ...Var) Var {
 	if len(args) != 2 {
 		panic("the length of args is not 2")
 	}
 
 	a, b := args[0], args[1]
 	if a.IsNum() && b.IsNum() {
-		return newEZNum(a.Num() * b.Num())
+		return newFCNum(a.Num() * b.Num())
 	}
 	if a.IsStr() {
 		panic(a.Str() + " is not a number")
@@ -85,7 +85,7 @@ func Mul(args ...EZVar) EZVar {
 	panic(b.Str() + " is not a number")
 }
 
-func Div(args ...EZVar) EZVar {
+func Div(args ...Var) Var {
 	if len(args) != 2 {
 		panic("the length of args is not 2")
 	}
@@ -95,7 +95,7 @@ func Div(args ...EZVar) EZVar {
 		if b.Num() == 0 {
 			panic("divise zero")
 		}
-		return newEZNum(a.Num() / b.Num())
+		return newFCNum(a.Num() / b.Num())
 	}
 	if a.IsStr() {
 		panic(a.Str() + " is not a number")
@@ -103,7 +103,7 @@ func Div(args ...EZVar) EZVar {
 	panic(b.Str() + " is not a number")
 }
 
-func Eq(args ...EZVar) EZVar {
+func Eq(args ...Var) Var {
 	if len(args) != 2 {
 		panic("the length of args is not 2")
 	}
@@ -120,7 +120,7 @@ func Eq(args ...EZVar) EZVar {
 	return EZFalse
 }
 
-func Gt(args ...EZVar) EZVar {
+func Gt(args ...Var) Var {
 	if len(args) != 2 {
 		panic("the length of args is not 2")
 	}
@@ -133,7 +133,7 @@ func Gt(args ...EZVar) EZVar {
 	return EZFalse
 }
 
-func Lt(args ...EZVar) EZVar {
+func Lt(args ...Var) Var {
 	if len(args) != 2 {
 		panic("the length of args is not 2")
 	}
@@ -146,7 +146,7 @@ func Lt(args ...EZVar) EZVar {
 	return EZFalse
 }
 
-func Println(args ...EZVar) EZVar {
+func Println(args ...Var) Var {
 	for _, arg := range args {
 		if arg.IsNum() {
 			fmt.Print(arg.Num())
@@ -159,7 +159,7 @@ func Println(args ...EZVar) EZVar {
 	return nil
 }
 
-func Printf(args ...EZVar) EZVar {
+func Printf(args ...Var) Var {
 	if len(args) == 0 {
 		return nil
 	}
@@ -183,18 +183,18 @@ func Printf(args ...EZVar) EZVar {
 	return nil
 }
 
-func And(args ...EZVar) EZVar {
+func And(args ...Var) Var {
 	for _, a := range args {
-		if IsTure(a) == false {
+		if a.IsTrue() == false {
 			return EZFalse
 		}
 	}
 	return EZTrue
 }
 
-func Or(args ...EZVar) EZVar {
+func Or(args ...Var) Var {
 	for _, a := range args {
-		if IsTure(a) == true {
+		if a.IsTrue() == true {
 			return EZTrue
 		}
 	}

@@ -1,32 +1,22 @@
-package ez_lang
+package func_lang
 
 import "io"
 
-// EZVar represents a variable used in EZLang
-// An EZVar is either a number or a string
-type EZVar interface {
+// Var represents a variable used in FunCLang
+// An Var is either a number or a string
+type Var interface {
 	IsNum() bool
-	Num() float64 // if this var is not a number, return the zero type of float: 0
+	Num() float64
 	IsStr() bool
-	Str() string // if this var is not a string, return an empty string: ""
+	Str() string
+	IsTrue() bool
 }
 
-// EZFunc x
-type EZFunc func(args ...EZVar) EZVar
+// Func ...
+type Func func(args ...Var) Var
 
-// EZInterpreter x
-type EZInterpreter interface {
-	Interprete(input io.Reader) error
-	RegisterFunc(funcName string, ezFunc EZFunc)
-}
-
-// IsTure checks if this var is true in EZ_LANG
-func IsTure(ev EZVar) bool {
-	if ev == nil {
-		return false
-	}
-	if ev.IsNum() {
-		return ev.Num() != 0
-	}
-	return ev.Str() != ""
+// FunCaller ...
+type FunCaller interface {
+	Call(funcBody io.Reader) (Var, error)
+	RegisterFunc(funcName string, f Func)
 }

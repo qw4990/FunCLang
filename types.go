@@ -1,9 +1,4 @@
-package ez_lang
-
-// type scope interface {
-// 	LookupVar(ident string) EZVar
-// 	LookupFunc(ident string) EZFunc
-// }
+package func_lang
 
 const (
 	_EZVAR_TYPE_NUM = iota
@@ -11,18 +6,18 @@ const (
 	_EZVAR_TYPE_NIL = iota
 )
 
-var ezNil = &ezVar{
+var fcNil = &fcVar{
 	typex: _EZVAR_TYPE_NIL,
 }
 
-type ezVar struct {
+type fcVar struct {
 	typex int
 	num   float64
 	str   string
 }
 
-func cloneEZVar(v EZVar) *ezVar {
-	ev := new(ezVar)
+func cloneVar(v Var) *fcVar {
+	ev := new(fcVar)
 	if v.IsNum() {
 		ev.typex = _EZVAR_TYPE_NUM
 		ev.num = v.Num()
@@ -33,84 +28,90 @@ func cloneEZVar(v EZVar) *ezVar {
 	return ev
 }
 
-func newEZNum(num float64) *ezVar {
-	return &ezVar{
+func newFCNum(num float64) *fcVar {
+	return &fcVar{
 		typex: _EZVAR_TYPE_NUM,
 		num:   num,
 	}
 }
 
-func newEZStr(str string) *ezVar {
-	return &ezVar{
+func newFCStr(str string) *fcVar {
+	return &fcVar{
 		typex: _EZVAR_TYPE_STR,
 		str:   str,
 	}
 }
 
-func (ev *ezVar) IsNum() bool {
+func (ev *fcVar) IsNum() bool {
 	return ev.typex == _EZVAR_TYPE_NUM
 }
 
-func (ev *ezVar) Num() float64 {
+func (ev *fcVar) Num() float64 {
 	if ev.IsNum() == false {
 		return 0 // return zero type of float64
 	}
 	return ev.num
 }
 
-func (ev *ezVar) IsStr() bool {
+func (ev *fcVar) IsStr() bool {
 	return ev.typex == _EZVAR_TYPE_STR
 }
 
-func (ev *ezVar) Str() string {
+func (ev *fcVar) Str() string {
 	if ev.IsStr() == false {
 		return "" // return zero type of string
 	}
 	return ev.str
 }
 
-func (ev *ezVar) isTrue() bool {
-	return IsTure(ev)
+func (ev *fcVar) IsTrue() bool {
+	if ev.IsNum() {
+		return ev.Num() != 0
+	}
+	if ev.IsStr() {
+		return ev.Str() != ""
+	}
+	return false
 }
 
-func (ev *ezVar) clone(v *ezVar) {
+func (ev *fcVar) clone(v *fcVar) {
 	ev.typex = v.typex
 	ev.num = v.num
 	ev.str = v.str
 }
 
-type ezScope struct {
-	varTable  map[string]*ezVar
-	funcTable map[string]EZFunc
-	parent    *ezScope
+type fcScope struct {
+	varTable  map[string]*fcVar
+	funcTable map[string]Func
+	parent    *fcScope
 }
 
-func newEZScope(parent *ezScope) *ezScope {
-	return &ezScope{
-		varTable:  make(map[string]*ezVar),
-		funcTable: make(map[string]EZFunc),
+func newFCScope(parent *fcScope) *fcScope {
+	return &fcScope{
+		varTable:  make(map[string]*fcVar),
+		funcTable: make(map[string]Func),
 		parent:    parent,
 	}
 }
 
 // lookupVar lookups a var in this scope and its ancestors
-func (es *ezScope) lookupVar(name string) *ezVar {
-	if v, ok := es.varTable[name]; ok {
+func (fs *fcScope) lookupVar(name string) *fcVar {
+	if v, ok := fs.varTable[name]; ok {
 		return v
 	}
-	if es.parent != nil {
-		return es.parent.lookupVar(name)
+	if fs.parent != nil {
+		return fs.parent.lookupVar(name)
 	}
 	return nil // not found
 }
 
 // lookupVar lookups a func in this scope and its ancestors
-func (es *ezScope) lookupFunc(name string) EZFunc {
-	if f, ok := es.funcTable[name]; ok {
+func (fs *fcScope) lookupFunc(name string) Func {
+	if f, ok := fs.funcTable[name]; ok {
 		return f
 	}
-	if es.parent != nil {
-		return es.parent.lookupFunc(name)
+	if fs.parent != nil {
+		return fs.parent.lookupFunc(name)
 	}
 	return nil // not found
 }
