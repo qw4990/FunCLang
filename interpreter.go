@@ -231,9 +231,7 @@ func (ezi *ezInterpreter) interpreteExpression() (*ezVar, error) {
 		return nil, err
 	}
 
-	if nToken.Type() == _LEFT_BRACKET_TYPE { // ( expression )
-		return ezi.interpreteBracketsExpr()
-	} else if nToken.Type() == _NUMBER_TYPE { // 12.34
+	if nToken.Type() == _NUMBER_TYPE { // 12.34
 		return ezi.interpreteNumberExpr()
 	} else if nToken.Type() == _STRING_TYPE { // "hello :)"
 		return ezi.interpreteStringExpr()
@@ -341,24 +339,6 @@ func (ezi *ezInterpreter) interpreteStringExpr() (*ezVar, error) {
 	}
 
 	return newEZStr(str[1 : len(str)-1]), nil
-}
-
-func (ezi *ezInterpreter) interpreteBracketsExpr() (*ezVar, error) {
-	ezi.tokener.Next() // remove left bracket
-	result, err := ezi.interpreteExpression()
-	if err != nil {
-		return nil, err
-	}
-
-	rightBracket, err := ezi.tokener.Next()
-	if err != nil {
-		return nil, err
-	}
-	if rightBracket.Type() != _RIGHT_BRACKET_TYPE {
-		return nil, errUnexpectedToken
-	}
-
-	return result, nil
 }
 
 // skipCodeBlock skips code block included by a pair of braces

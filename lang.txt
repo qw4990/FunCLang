@@ -21,7 +21,6 @@
     FOR <expression> { <program> }
 
 <expression>:
-    '(' <expression> ')'
     <function_call> // IDENT '(' ...
     IDENT
     NUM
