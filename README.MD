@@ -17,7 +17,7 @@ Println(name, "'s age is", age)
 ```
 
 ### Bool
-Empty string and zero number will be regarded as False in EZLang, and all other values are True;
+<b>Empty string and zero number will be regarded as False in EZLang, and all other values are True;</b>
 
 You can see function "IsTure" in interface.go;
 
@@ -82,5 +82,7 @@ Please read default_funcs.go to see how to write your own functions;
 
 # Use EZLang with Golang
 EZLang can be easily nested in your Golang;
+
+<b>You just implement EZFunc and register your function into EZLang interpreter, then you can use your function in EZLang;</b>
 
 Please read demos_test.go for more examples;
