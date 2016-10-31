@@ -1,9 +1,9 @@
 # FunCLang
-FunCLang (Function Call Language) is an easy language written by Golang and can be nested in your Golang code;
+FunCLang (Function Call Language) is an easy language written in Golang and can be nested in your Golang code;
 
 FunCLang is easily to use and understand; The total lines of code of this project is less than 1000;
 
-You should regard FunCLang codes as the body of your Golang function, which can be modified on runtime ;)
+You should regard FunCLang codes as the body of your Golang function, but can be modified on runtime ;)
 
 # Types and Variables
 FunCLang has only two types: string and number(float64);
@@ -17,6 +17,10 @@ age := 22
 Println(name, "'s age is", age)
 ```
 
+<b>Zero number or empty string will be regared as False, and all other values are True;</b>
+
+True and False will be used in &lt;if&gt; and &lt;for&gt; statements; Please see below;
+
 # Interact with Golang
 Each variable in FunCLang is represented by an interface in Golang:
 
@@ -26,7 +30,6 @@ type Var interface {
 	Num() float64
 	IsStr() bool
 	Str() string
-	IsTrue() bool
 }
 ```
 
@@ -36,7 +39,7 @@ And each function in FunCLang is a Golang function whose type is:
 type Func func(args ...Var) Var
 ```
 
-So the Println in above code may be implemented in Golang:
+So the Println in above codes may be implemented in Golang:
 
 ```
 func Println(args ...Var) Var {
@@ -58,8 +61,7 @@ func Println(args ...Var) Var {
 
 So it's easy for you to write some functions in Golang and register them into FunCLang and then use them in FuncClang;
 
-Please see more example below;
-
+We will see more example soon;
 
 # Statements
 FuncClang programs consist of multiple statements;
@@ -122,9 +124,9 @@ Please read <a href="https://github.com/qw4990/FuncLang/blob/master/default_func
 # Demo
 FuncLang can be easily nested in your Golang;
 
-<b>You just implement Func and register your function into FuncLang interpreter, then you can use your function in FuncLang;</b>
+<b>You just implement Func in Golang and register it into FuncLang, then you can use it in FuncLang;</b>
 
-There is a demo:
+There is a demo (or five demos actually):
 
 ```
 package main
@@ -252,7 +254,6 @@ func main() {
 
 	getFuncBodyFromNet := func() string { return "" }
 	for i := 0; i < 10; i++ {
-		fmt.Println("===> ", i)
 		body := getFuncBodyFromNet()
 		if body == "" {
 			body = defaultBody
@@ -261,7 +262,6 @@ func main() {
 		time.Sleep(time.Second)
 	}
 }
-
 ```
 
 Please read <a href="https://github.com/qw4990/FuncLang/blob/master/demos_test.go">demos_test.go</a> for more examples;

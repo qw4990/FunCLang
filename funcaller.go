@@ -339,9 +339,6 @@ func (fci *funcaller) interpreteFuncCallExpr() (*fcVar, error) {
 	if err != nil {
 		return nil, err
 	}
-	if result == nil {
-		return fcNil, nil
-	}
 
 	return cloneVar(result), nil
 }
@@ -413,5 +410,8 @@ func (fci *funcaller) safelyRun(funName string, fun Func, args ...Var) (result V
 	}()
 
 	result = fun(args...)
+	if result == nil {
+		result = fcNil
+	}
 	return
 }
