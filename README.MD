@@ -7,7 +7,7 @@ EZLang is easily to use and understand; The total lines of code of this project 
 ## Types
 EZLang has only two types: string and number(float64);
 
-You can use <declare> statement to declare variables, for example:
+You can use &lt;declare&gt; statement to declare variables, for example:
 
 ```
 name := "zhangyuanjia"
@@ -17,16 +17,16 @@ Println(name, "'s age is", age)
 ```
 
 ### Bool
-<font color="red">Empty string and zero number will be regarded as False in EZLang, and all other values are True;</font>
+Empty string and zero number will be regarded as False in EZLang, and all other values are True;
 
 You can see function "IsTure" in interface.go;
 
-Bool value will be used in <if> and <for> statements; please see below;
+Bool value will be used in &lt;if&gt; and &lt;for&gt; statements; please see below;
 
 ## Statements
 EZLang programs consist of multiple statements;
 
-There are only four kinds of statements in this language: <if>, <for>, <declare>, <assign>;
+There are only four kinds of statements in this language: &lt;if&gt;, &lt;for&gt;, &lt;declare&gt;, &lt;assign&gt;;
 
 This program prints all fibonacci numbers less than 1000:
 
@@ -42,7 +42,7 @@ for Lt(b, 1000) {
 ```
 
 ### Scope
-<if> and <for> statements have their own scope; Please see this example:
+&lt;if&gt; and &lt;for&gt; statements have their own scope; Please see this example:
 
 ```
 x := 2
