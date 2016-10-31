@@ -1,6 +1,7 @@
 package ez_lang
 
 import (
+	"fmt"
 	"strconv"
 	"strings"
 	"testing"
@@ -33,6 +34,8 @@ func TestDemo0(t *testing.T) {
 		for _, v := range ezVars {
 			if v.IsNum() {
 				result += v.Num()
+			} else {
+				panic(fmt.Sprintf("%v is non a number", v.Str())) // use panic to report error
 			}
 		}
 		return &mockEZVar{"", result}
