@@ -9,7 +9,6 @@ type Var interface {
 	Num() float64
 	IsStr() bool
 	Str() string
-	IsTrue() bool
 }
 
 // Func ...
@@ -19,4 +18,12 @@ type Func func(args ...Var) Var
 type FunCaller interface {
 	Call(funcBody io.Reader) (Var, error)
 	RegisterFunc(funcName string, f Func)
+}
+
+// IsTrue ...
+func IsTrue(v Var) bool {
+	if v.IsNum() {
+		return v.Num() != 0
+	}
+	return v.Str() != ""
 }

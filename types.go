@@ -11,9 +11,10 @@ var fcNil = &fcVar{
 }
 
 type fcVar struct {
-	typex int
-	num   float64
-	str   string
+	typex   int
+	num     float64
+	str     string
+	boolean bool
 }
 
 func cloneVar(v Var) *fcVar {
@@ -21,7 +22,7 @@ func cloneVar(v Var) *fcVar {
 	if v.IsNum() {
 		ev.typex = _EZVAR_TYPE_NUM
 		ev.num = v.Num()
-	} else {
+	} else if v.IsStr() {
 		ev.typex = _EZVAR_TYPE_STR
 		ev.str = v.Str()
 	}

@@ -185,7 +185,7 @@ func Printf(args ...Var) Var {
 
 func And(args ...Var) Var {
 	for _, a := range args {
-		if a.IsTrue() == false {
+		if IsTrue(a) == false {
 			return EZFalse
 		}
 	}
@@ -194,7 +194,7 @@ func And(args ...Var) Var {
 
 func Or(args ...Var) Var {
 	for _, a := range args {
-		if a.IsTrue() == true {
+		if IsTrue(a) == true {
 			return EZTrue
 		}
 	}

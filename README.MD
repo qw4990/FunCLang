@@ -30,13 +30,13 @@ type Var interface {
 }
 ```
 
-And each function in FunCLang is a function whose type is:
+And each function in FunCLang is a Golang function whose type is:
 
 ```
 type Func func(args ...Var) Var
 ```
 
-So the Println in above code may be implemented by Golang:
+So the Println in above code may be implemented in Golang:
 
 ```
 func Println(args ...Var) Var {
@@ -58,13 +58,13 @@ func Println(args ...Var) Var {
 
 So it's easy for you to write some functions in Golang and register them into FunCLang and then use them in FuncClang;
 
-Please see more example in demos_test.go;
+Please see more example below;
 
 
 # Statements
 FuncClang programs consist of multiple statements;
 
-There are only four kinds of statements in this language: &lt;if&gt;, &lt;for&gt;, &lt;declare&gt;, &lt;assign&gt;, &lt;return&gt;;
+There are only five kinds of statements in this language: &lt;if&gt;, &lt;for&gt;, &lt;declare&gt;, &lt;assign&gt;, &lt;return&gt;;
 
 This program prints some fibonacci numbers:
 
@@ -108,7 +108,7 @@ Expression in FuncClang is extremely simple; There are only four typies of expre
 + identification: x
 + function call : Println(123, "Hello", x)
 
-Each expression will return a value who implement interface Var;
+Each expression will return a value which implement interface Var;
 
 # All operators are function call
 For simplification, there are no '+', '<', '==', '&&' and all other operators;
@@ -119,7 +119,7 @@ All default functions are put in <a href="https://github.com/qw4990/FuncLang/blo
 
 Please read <a href="https://github.com/qw4990/FuncLang/blob/master/default_funcs.go">default_funcs.go</a> to see how to write your own functions;
 
-# Use FuncLang with Golang
+# Demo
 FuncLang can be easily nested in your Golang;
 
 <b>You just implement Func and register your function into FuncLang interpreter, then you can use your function in FuncLang;</b>
