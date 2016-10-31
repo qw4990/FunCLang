@@ -9,7 +9,10 @@ import (
 )
 
 func TestTokenize(t *testing.T) {
-	input := strings.NewReader(`call(12.3, 4)
+	input := strings.NewReader(`
+	Lt(Rand(), 5)
+
+	call(12.3, 4)
     x := 23.5 
     if NumEqual(x, 12) {
 		y := "12 dx we" 

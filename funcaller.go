@@ -266,7 +266,7 @@ func (fci *funcaller) interpreteExpression() (*fcVar, error) {
 
 	if nToken.Type() == _IDENT_TYPE {
 		nnToken, err := fci.tokener.Peekth(1)
-		if err == nil && nnToken.Type() == _LEFT_BRACKET_TYPE { // print(123)
+		if err == nil && nnToken.Type() == _LEFT_BRACKET_TYPE { // Println(123)
 			return fci.interpreteFuncCallExpr()
 		}
 		return fci.interpreteIdentExpr() // someVar
@@ -306,27 +306,32 @@ func (fci *funcaller) interpreteFuncCallExpr() (*fcVar, error) {
 	}
 
 	var args []Var
-	for {
-		arg, err := fci.interpreteExpression()
-		if err == nil {
-			args = append(args, arg)
-		} else if err == errUnexpectedToken { // ',' or ')'
-			break
-		}
-		if err != nil {
-			return nil, err
-		}
+	nToken, err := fci.tokener.Peekth(0)
+	if err != nil {
+		return nil, err
+	}
+	if nToken.Type() == _RIGHT_BRACKET_TYPE {
+		fci.tokener.Next() // empty args
+	} else {
+		for {
+			arg, err := fci.interpreteExpression()
+			if err == nil {
+				args = append(args, arg)
+			} else {
+				return nil, err
+			}
 
-		commaOrBracket, err := fci.tokener.Next()
-		if err != nil {
-			return nil, err
-		}
-		if commaOrBracket.Type() == _COMMA_TYPE {
-			// continue
-		} else if commaOrBracket.Type() == _RIGHT_BRACKET_TYPE {
-			break
-		} else {
-			return nil, errUnexpectedToken
+			commaOrBracket, err := fci.tokener.Next()
+			if err != nil {
+				return nil, err
+			}
+			if commaOrBracket.Type() == _COMMA_TYPE {
+				// continue
+			} else if commaOrBracket.Type() == _RIGHT_BRACKET_TYPE {
+				break
+			} else {
+				return nil, errUnexpectedToken
+			}
 		}
 	}
 

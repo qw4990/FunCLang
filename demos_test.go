@@ -28,13 +28,6 @@ func (mv *mockVar) IsStr() bool {
 	return mv.num == 0
 }
 
-func (mv *mockVar) IsTrue() bool {
-	if mv.IsStr() {
-		return mv.Str() != ""
-	}
-	return mv.Num() != 0
-}
-
 func TestDemo0(t *testing.T) {
 	sum := func(vs ...Var) Var {
 		result := 0.0
