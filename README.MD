@@ -19,7 +19,7 @@ Println(name, "'s age is", age)
 ### Bool
 <b>Empty string and zero number will be regarded as False in EZLang, and all other values are True;</b>
 
-You can see function "IsTure" in interface.go;
+You can see function <a href="https://github.com/qw4990/EZLang/blob/master/interface.go#L23-L29">IsTure</a> in interface.go;
 
 Bool value will be used in &lt;if&gt; and &lt;for&gt; statements; please see below;
 
@@ -76,13 +76,13 @@ For simplification, there are no '+', '<', '==', '&&' and all other operators in
 
 If you want, you can use default functions (like Add, Lt, Euqal, And) or write your own functions to replace these operators;
 
-All default functions are put in default_funcs.go; 
+All default functions are put in <a href="https://github.com/qw4990/EZLang/blob/master/default_funcs.go">default_funcs.go</a>;
 
-Please read default_funcs.go to see how to write your own functions;
+Please read <a href="https://github.com/qw4990/EZLang/blob/master/default_funcs.go">default_funcs.go</a> to see how to write your own functions;
 
 # Use EZLang with Golang
 EZLang can be easily nested in your Golang;
 
 <b>You just implement EZFunc and register your function into EZLang interpreter, then you can use your function in EZLang;</b>
 
-Please read demos_test.go for more examples;
+Please read <a href="https://github.com/qw4990/EZLang/blob/master/demos_test.go">demos_test.go</a> for more examples;
