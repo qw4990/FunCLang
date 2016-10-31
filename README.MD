@@ -124,4 +124,144 @@ FuncLang can be easily nested in your Golang;
 
 <b>You just implement Func and register your function into FuncLang interpreter, then you can use your function in FuncLang;</b>
 
+There is a demo:
+
+```
+package main
+
+import (
+	"fmt"
+	"math/rand"
+	"strconv"
+	"strings"
+	"time"
+
+	"github.com/qw4990/func_lang"
+)
+
+type fcVar struct {
+	num float64
+	str string
+	err error
+}
+
+var (
+	// zero number or empty string will be regared as False
+	// please see IsTure() function in interface.go
+	fcFalse = &fcVar{num: 0, str: ""}
+	fcTrue  = &fcVar{num: 1, str: "1"}
+)
+
+func (fv *fcVar) IsNum() bool {
+	return fv.num != 0
+}
+
+func (fv *fcVar) IsStr() bool {
+	return fv.str != ""
+}
+
+func (fv *fcVar) Num() float64 {
+	return fv.num
+}
+
+func (fv *fcVar) Str() string {
+	return fv.str
+}
+
+func fcGt(vs ...func_lang.Var) func_lang.Var {
+	if len(vs) != 2 { // if there is error, use panic to expose it
+		panic("args error")
+	}
+	if (vs[0].IsNum() && vs[1].IsNum()) == false {
+		panic("args error")
+	}
+	if vs[0].Num() > vs[1].Num() {
+		return fcTrue
+	}
+	return fcFalse
+}
+
+func fcAtoi(vs ...func_lang.Var) func_lang.Var {
+	if len(vs) != 1 {
+		panic("args error")
+	}
+	if vs[0].IsNum() {
+		return vs[0]
+	}
+	str := vs[0].Str()
+	num, err := strconv.Atoi(str)
+	if err != nil {
+		panic("Atoi err: " + err.Error())
+	}
+	return &fcVar{num: float64(num)}
+}
+
+func fcRand(vs ...func_lang.Var) func_lang.Var {
+	rand.Seed(time.Now().Unix())
+	x := rand.Float64()
+	return &fcVar{num: x}
+}
+
+var (
+	func1 = `Println("Hello, World")`
+	func2 = `
+            for Lt(Rand(), 0.5) {
+                Println("Try again!!!")
+            }
+    `
+	func3 = `
+            strx := "233"
+            numx := Atoi(strx)
+            if Gt(numx, 222) {
+                Println("Are you happy?")
+            }`
+	func4 = `
+            x := Rand()
+            if Lt(x, 5) {
+                return "Happy!!!"
+            }
+            return "Not Happy!!!"
+    `
+	defaultBody = `
+            Println("Default function body; ", "xxxxx")
+    `
+)
+
+func call(body string) {
+	fc := func_lang.NewFunCaller()
+	fc.RegisterFunc("Rand", fcRand)
+	fc.RegisterFunc("Atoi", fcAtoi)
+	fc.RegisterFunc("Gt", fcGt)
+
+	reader := strings.NewReader(body)
+
+	result, err := fc.Call(reader)
+	if err != nil {
+		panic(err)
+	}
+	if result != nil && result.IsStr() {
+		fmt.Println("FUNC RET: ", result.Str())
+	}
+}
+
+func main() {
+	call(func1)
+	call(func2)
+	call(func3)
+	call(func4)
+
+	getFuncBodyFromNet := func() string { return "" }
+	for i := 0; i < 10; i++ {
+		fmt.Println("===> ", i)
+		body := getFuncBodyFromNet()
+		if body == "" {
+			body = defaultBody
+		}
+		call(body)
+		time.Sleep(time.Second)
+	}
+}
+
+```
+
 Please read <a href="https://github.com/qw4990/FuncLang/blob/master/demos_test.go">demos_test.go</a> for more examples;
