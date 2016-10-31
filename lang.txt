@@ -1,0 +1,45 @@
+<program>:
+    <statement> SEP <program>
+
+<statement>:
+    <if_statement>
+    <for_statement>
+    <declare>
+    <assign>
+    <expression>
+
+<declare>:
+    IDENT := <expression>
+
+<assign>:
+    IDENT = <expression>
+
+<if_statement>:
+    IF <expression> { <program> }
+
+<for_statement>:
+    FOR <expression> { <program> }
+
+<expression>:
+    '(' <expression> ')'
+    <function_call> // IDENT '(' ...
+    IDENT
+    NUM
+    STR
+
+<function_call>:
+    IDENT '(' ')'
+    IDENT '(' <expression_list> ')'
+
+<expression_list>:
+    <expression>
+    <expression> ',' <expression_list>
+
+
+=============================================================
+
+
+IDENT:  ^[a-zA-Z][a-zA-Z_0-9]*$
+NUM:    ^[0-9]*$
+STR:    ^"[^"]*"$
+SEP:    [\n\t\r ]
