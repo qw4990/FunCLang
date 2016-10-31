@@ -8,7 +8,7 @@ import (
 func TestSimple(t *testing.T) {
 	codes := `
 		x := 2
-		y := 1
+		y := 1 
 		if y {
 			Println("Yes")
 			x := 3

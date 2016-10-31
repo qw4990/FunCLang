@@ -1,6 +1,6 @@
 package ez_lang
 
-import "lab/ez_lang/tokener"
+import "github.com/qw4990/EZLang/tokener"
 
 const (
 	_ASSIGN_TYPE   = iota

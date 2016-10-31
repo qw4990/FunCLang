@@ -4,8 +4,9 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"lab/ez_lang/tokener"
 	"strconv"
+
+	"github.com/qw4990/EZLang/tokener"
 )
 
 var errUnexpectedToken = errors.New("Unexpected token")
