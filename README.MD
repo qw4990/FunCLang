@@ -76,9 +76,9 @@ For simplification, there are no '+', '<', '==', '&&' and all other operators in
 
 If you want, you can use default functions (like Add, Lt, Euqal, And) or write your own functions to replace these operators;
 
-All default functions are put in default_funcs.go;
+All default functions are put in default_funcs.go; 
 
-And please see below for more detail about writing your own functions;
+Please read default_funcs.go to see how to write your own functions;
 
 # Use EZLang with Golang
 EZLang can be easily nested in your Golang;
