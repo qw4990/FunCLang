@@ -22,6 +22,9 @@ type EZInterpreter interface {
 
 // IsTure checks if this var is true in EZ_LANG
 func IsTure(ev EZVar) bool {
+	if ev == nil {
+		return false
+	}
 	if ev.IsNum() {
 		return ev.Num() != 0
 	}
