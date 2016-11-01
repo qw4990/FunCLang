@@ -3,7 +3,7 @@ FunCLang (Function Call Language) is an easy language written in Golang and can 
 
 FunCLang is easily to use and understand; The total lines of code of this project is less than 1000;
 
-You should regard FunCLang codes as the body of your Golang function, but can be modified on runtime ;)
+You should regard FunCLang code as the body of your Golang function, but can be modified on runtime ;)
 
 # Types and Variables
 FunCLang has only two types: string and number(float64);
