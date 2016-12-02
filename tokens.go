@@ -33,7 +33,7 @@ const (
 	_IDENT_TYPE   = iota
 	_IDENT_REGEX  = "[A-Za-z_][A-Za-z_0-9]*"
 
-	_SPLITER_CHARS = "\r\n\t "
+	_SPLITER_CHARS = "\r\n\t; "
 )
 
 type tokenizeRule struct {
