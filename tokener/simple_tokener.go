@@ -117,7 +117,7 @@ func (st *simpleTokener) tokenize(data []byte) error {
 		}
 
 		if longest == 0 { // no matched regexp, return an error
-			return fmt.Errorf("Tokenize error begining at >>>: %v", data)
+			return fmt.Errorf("Tokenize error begining at >>>: %v", string(data))
 		}
 
 		st.tokens = append(st.tokens, &simpleToken{
