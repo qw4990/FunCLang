@@ -3,7 +3,7 @@ FunCLang (Function Call Language) is an easy language written in Golang and can 
 
 FunCLang is easily to use and understand; The total lines of code of this project is less than 1000;
 
-You should regard FunCLang codes as the body of your Golang function, but can be modified on runtime ;)
+You should regard FunCLang code as the body of your Golang function, but can be modified on runtime ;)
 
 # Types and Variables
 FunCLang has only two types: string and number(float64);
@@ -59,16 +59,16 @@ func Println(args ...Var) Var {
 }
 ```
 
-So it's easy for you to write some functions in Golang and register them into FunCLang and then use them in FuncClang;
+So it's easy for you to write some functions in Golang and register them into FunCLang and then use them in FuncCLang;
 
-We will see more example soon;
+We will see more examples soon;
 
 # Statements
-FuncClang programs consist of multiple statements;
+FuncCLang program consist of multiple statements;
 
 There are only five kinds of statements in this language: &lt;if&gt;, &lt;for&gt;, &lt;declare&gt;, &lt;assign&gt;, &lt;return&gt;;
 
-This program prints some fibonacci numbers:
+This demo program prints some fibonacci numbers:
 
 ```
 lim := 0                            #declare
@@ -103,14 +103,14 @@ Printf("%v ", x)
 The output of this program is "55 2";
 
 # Expression
-Expression in FuncClang is extremely simple; There are only four typies of expression: 
+Expression in FuncCLang is extremely simple; There are only four typies of expression: 
 
-+ literal number: 123
++ literal number: 123.233
 + literal string: "Hello World"
 + identification: x
 + function call : Println(123, "Hello", x)
 
-Each expression will return a value which implement interface Var;
+Each expression returns a value which implement interface Var;
 
 # All operators are function call
 For simplification, there are no '+', '<', '==', '&&' and all other operators;
