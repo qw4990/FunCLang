@@ -93,3 +93,17 @@ func TestReturn(t *testing.T) {
 		t.Fatal("error")
 	}
 }
+
+func TestSingleQuote(t *testing.T) {
+	codes := `
+		str := 'hello'
+		Println(str)
+	`
+	reader := strings.NewReader(codes)
+
+	fc := NewFunCaller()
+	_, err := fc.Call(reader)
+	if err != nil {
+		t.Fatal("error")
+	}
+}

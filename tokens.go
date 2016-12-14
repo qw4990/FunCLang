@@ -29,7 +29,7 @@ const (
 	_NUMBER_TYPE  = iota
 	_NUMBER_REGEX = "[0-9]+([.][0-9]+)?"
 	_STRING_TYPE  = iota
-	_STRING_REGEX = "\"[^\"]*\""
+	_STRING_REGEX = "[\"'][^\"]*[\"']"
 	_IDENT_TYPE   = iota
 	_IDENT_REGEX  = "[A-Za-z_][A-Za-z_0-9]*"
 
